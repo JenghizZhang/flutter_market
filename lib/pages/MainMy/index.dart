@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_base/api/My.dart';
+import 'package:flutter_base/api/my.dart';
 import 'package:flutter_base/components/MainHome/HmMoreList.dart';
 import 'package:flutter_base/components/MainMy/HmGuess.dart';
 import 'package:flutter_base/stores/UserController.dart';
@@ -19,7 +19,7 @@ class _MineViewState extends State<MineView> {
   final ScrollController _controller = ScrollController();
   bool _isLoading = false;
   bool _hasMore = true;
-  final UserController _userController = Get.put(UserController());
+  final UserController _userController = Get.find();
 
   Widget _buildHeader() {
     return Container(

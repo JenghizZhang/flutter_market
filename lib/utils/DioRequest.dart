@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_base/constants/index.dart';
+import 'package:flutter_base/stores/TokenManager.dart';
 
 class DioRequest {
   final _dio = Dio();
@@ -26,6 +27,12 @@ class DioRequest {
       InterceptorsWrapper(
         // 请求拦截器
         onRequest: (request, handler) {
+          final token = tokenManager.getToken();
+
+          if (token.isNotEmpty) {
+            request.headers["Authorization"] = "Bearer $token";
+          }
+
           handler.next(request);
         },
         // 响应拦截器
@@ -38,7 +45,13 @@ class DioRequest {
         },
         // 错误拦截器
         onError: (error, handler) {
-          handler.reject(error);
+          // handler.reject(error);
+          handler.reject(
+            DioException(
+              requestOptions: error.requestOptions,
+              message: error.response?.data["msg"] ?? " ",
+            ),
+          );
         },
       ),
     );
@@ -72,6 +85,8 @@ class DioRequest {
         response: e.response,
         message: data["msg"] ?? data["message"] ?? e.message,
       );
+    } catch (e) {
+      rethrow;
     }
   }
 }

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_base/api/user.dart';
 import 'package:flutter_base/pages/MainCart/index.dart';
 import 'package:flutter_base/pages/MainCategory/index.dart';
 import 'package:flutter_base/pages/MainHome/index.dart';
 import 'package:flutter_base/pages/MainMy/index.dart';
+import 'package:flutter_base/stores/TokenManager.dart';
+import 'package:flutter_base/stores/UserController.dart';
+import 'package:get/get.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -13,6 +17,22 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _initUser();
+  }
+
+  final UserController _userController = Get.put(UserController());
+
+  _initUser() async {
+    await tokenManager.init();
+    if (tokenManager.getToken().isNotEmpty) {
+      print(tokenManager.getToken());
+      _userController.updateUserInfo(await getUserInfoAPI());
+    }
+  }
 
   // 定义数据 根据数据类型进行渲染4个导航
   final List<Map<String, String>> _tabList = [
