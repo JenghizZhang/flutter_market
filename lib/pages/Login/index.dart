@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_base/api/user.dart';
 import 'package:flutter_base/stores/TokenManager.dart';
 import 'package:flutter_base/stores/UserController.dart';
+import 'package:flutter_base/utils/LoadingDialog.dart';
 import 'package:flutter_base/utils/ToastUtils.dart';
 import 'package:get/get.dart';
 
@@ -25,6 +26,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void _login() async {
     try {
+      LoadingDialog.show(context);
       var res = await loginAPI({
         "account": _phoneController.text,
         "password": _codeController.text,
@@ -33,8 +35,10 @@ class _LoginPageState extends State<LoginPage> {
       tokenManager.setToken(res.token);
       ToastUtils.showToast(context, "登陆成功");
       Navigator.pop(context);
+      LoadingDialog.hide(context);
     } catch (e) {
       ToastUtils.showToast(context, (e as DioException).message);
+      LoadingDialog.hide(context);
     }
   }
 

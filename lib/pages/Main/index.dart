@@ -26,10 +26,9 @@ class _MainPageState extends State<MainPage> {
 
   final UserController _userController = Get.put(UserController());
 
-  _initUser() async {
+  void _initUser() async {
     await tokenManager.init();
     if (tokenManager.getToken().isNotEmpty) {
-      print(tokenManager.getToken());
       _userController.updateUserInfo(await getUserInfoAPI());
     }
   }

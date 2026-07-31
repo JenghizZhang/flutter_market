@@ -5,7 +5,7 @@ class HmMoreList extends StatefulWidget {
   // 推荐列表
   final List<GoodDetailItem> recommendList;
 
-  HmMoreList({Key? key, required this.recommendList}) : super(key: key);
+  const HmMoreList({super.key, required this.recommendList});
 
   @override
   _HmMoreListState createState() => _HmMoreListState();
@@ -59,7 +59,7 @@ class _HmMoreListState extends State<HmMoreList> {
                     children: [
                       TextSpan(text: " "),
                       TextSpan(
-                        text: "${widget.recommendList[index].price}",
+                        text: widget.recommendList[index].price,
                         style: TextStyle(
                           decoration: TextDecoration.lineThrough,
                           color: Colors.grey,

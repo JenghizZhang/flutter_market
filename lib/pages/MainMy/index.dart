@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_base/api/my.dart';
 import 'package:flutter_base/components/MainHome/HmMoreList.dart';
 import 'package:flutter_base/components/MainMy/HmGuess.dart';
+import 'package:flutter_base/stores/TokenManager.dart';
 import 'package:flutter_base/stores/UserController.dart';
 import 'package:flutter_base/viewmodels/home.dart';
+import 'package:flutter_base/viewmodels/user.dart';
 import 'package:get/get.dart';
 
 class MineView extends StatefulWidget {
@@ -67,6 +69,44 @@ class _MineViewState extends State<MineView> {
                 }),
               ],
             ),
+          ),
+          Obx(
+            () => _userController.user.value.id.isEmpty
+                ? Text("")
+                : Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text("提示"),
+                              content: Text("确认退出登录吗"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text("取消"),
+                                ),
+                                TextButton(
+                                  onPressed: () async {
+                                    await tokenManager.removeToken();
+                                    _userController.updateUserInfo(
+                                      UserInfo.fromJSON({}),
+                                    );
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text("确认"),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      child: Text("退出登录", textAlign: TextAlign.end),
+                    ),
+                  ),
           ),
         ],
       ),
