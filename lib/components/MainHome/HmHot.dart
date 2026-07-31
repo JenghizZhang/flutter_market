@@ -25,36 +25,39 @@ class _HmHotState extends State<HmHot> {
   // 构建子项
   List<Widget> _getChildrenList() {
     return _items.map((item) {
-      return Container(
-        width: 80,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                item.picture,
-                width: 80,
-                height: 100,
-                errorBuilder: (context, error, stackTrace) {
-                  return Image.asset(
-                    "lib/assets/home_cmd_inner.png",
-                    width: 80,
-                    height: 100,
-                  );
-                },
+      return Expanded(
+        child: Container(
+          // width: 80,
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.network(
+                  item.picture,
+                  // width: 80,
+                  height: 100,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(
+                      "lib/assets/home_cmd_inner.png",
+                      // width: 80,
+                      height: 100,
+                    );
+                  },
+                ),
               ),
-            ),
-            SizedBox(height: 5),
-            Text(
-              "¥${item.price}",
-              style: TextStyle(
-                fontSize: 12,
-                color: const Color.fromARGB(255, 86, 24, 20),
+              SizedBox(height: 5),
+              Text(
+                "¥${item.price}",
+                style: TextStyle(
+                  fontSize: 12,
+                  color: const Color.fromARGB(255, 86, 24, 20),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
     }).toList();

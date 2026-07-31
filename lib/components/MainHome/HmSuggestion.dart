@@ -59,35 +59,37 @@ class _HmSuggestionState extends State<HmSuggestion> {
     var list = _getDisplayItems();
     return list
         .map(
-          (item) => Column(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.network(
-                  item.picture,
-                  width: 100,
-                  height: 110,
-                  fit: BoxFit.fill,
-                  errorBuilder: ((context, error, stackTrace) => Image.asset(
-                    "lib/assets/home_cmd_inner.png",
+          (item) => Expanded(
+            child: Column(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.network(
+                    item.picture,
+                    // width: 100,
                     height: 110,
-                    width: 100,
-                  )),
+                    fit: BoxFit.fill,
+                    errorBuilder: ((context, error, stackTrace) => Image.asset(
+                      "lib/assets/home_cmd_inner.png",
+                      height: 110,
+                      // width: 100,
+                    )),
+                  ),
                 ),
-              ),
-              SizedBox(height: 10),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 240, 96, 12),
-                  borderRadius: BorderRadius.circular(12),
+                SizedBox(height: 10),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 240, 96, 12),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    '${item.price}',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
-                child: Text(
-                  '${item.price}',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         )
         .toList();
@@ -112,8 +114,10 @@ class _HmSuggestionState extends State<HmSuggestion> {
           Row(
             children: [
               _buildLeft(),
+              SizedBox(width: 10),
               Expanded(
                 child: Row(
+                  spacing: 10,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: _getChildrenList(),
                 ),

@@ -11,7 +11,7 @@ class HmSlider extends StatefulWidget {
 }
 
 class _HmSliderState extends State<HmSlider> {
-  CarouselSliderController _carouselController = CarouselSliderController();
+  final CarouselSliderController _carouselController = CarouselSliderController();
   int _activeIndex = 0;
 
   Widget _getSlider() {
